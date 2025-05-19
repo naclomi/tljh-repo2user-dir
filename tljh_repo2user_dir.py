@@ -1,9 +1,9 @@
 import os
 import shutil
+from os.path import expanduser
 from pwd import getpwnam
 from git import Repo
 from tljh.hooks import hookimpl
-
 
 def clone_repo(user, git_url, repo_dir):
     """
@@ -26,7 +26,7 @@ def tljh_new_user_create(username):
     A function to clone a github repo into a 'repos' directory for every
     JupyterHub user when the server spawns a new notebook instance.
     """
-    user_root_dir = os.path.join("/home", username)
+    user_root_dir = expanduser(f"~{username}")
     # get repo url from environment variable
     git_url = os.getenv("REPO_URL")
     # nothing to do if no repo is specified
